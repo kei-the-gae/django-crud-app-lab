@@ -6,4 +6,5 @@ urlpatterns = [
     path('accounts/signup/', views.signup, name='signup'),
     path('todos/', views.todo_index, name='todo_index'),
     path('notes/<int:note_id>/', views.note_detail, name='note_detail'),
+    path('notes/create/', views.NoteCreate.as_view(), name='note_create'),
 ]

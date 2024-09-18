@@ -34,3 +34,11 @@ def todo_index(req):
 def note_detail(req, note_id):
     note = Note.objects.get(id=note_id)
     return render(req, 'todos/notes/detail.html', {'note': note})
+
+class NoteCreate(CreateView):
+    model = Note
+    fields = ['title', 'body']
+    success_url = '/todos/'
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
