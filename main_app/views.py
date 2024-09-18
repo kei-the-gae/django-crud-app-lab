@@ -6,6 +6,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from .models import Todo, Note
 
 # Create your views here.
 class Home(LoginView):
@@ -24,3 +25,8 @@ def signup(req):
     form = UserCreationForm()
     context = {'form': form, 'error_message': error_message}
     return render(req, 'signup.html', context)
+
+def todo_index(req):
+    todos = Todo.objects.all()
+    notes = Note.objects.all()
+    return render(req, 'todos/index.html', {'todos': todos, 'notes': notes})
