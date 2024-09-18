@@ -27,12 +27,14 @@ def signup(req):
     context = {'form': form, 'error_message': error_message}
     return render(req, 'signup.html', context)
 
+@login_required
 def todo_index(req):
     todo_form = TodoForm()
-    todos = Todo.objects.all()
-    notes = Note.objects.all()
+    todos = Todo.objects.filter(user=req.user)
+    notes = Note.objects.filter(user=req.user)
     return render(req, 'todos/index.html', {'todo_form': todo_form, 'todos': todos, 'notes': notes})
 
+@login_required
 def add_todo(req):
     form = TodoForm(req.POST)
     if form.is_valid():
@@ -41,11 +43,25 @@ def add_todo(req):
         new_todo.save()
     return redirect('todo_index')
 
+@login_required
+def update_todo(req):
+    form = req.body
+    if form.is_valid():
+        updated_todo = form
+        updated_todo.user_id = req.user.id
+        updated_todo.save()
+    return redirect('todo_index')
+
+class TodoDelete(LoginRequiredMixin, DeleteView):
+    model = Todo
+    success_url = '/todos/'
+
+@login_required
 def note_detail(req, note_id):
     note = Note.objects.get(id=note_id)
     return render(req, 'todos/notes/detail.html', {'note': note})
 
-class NoteCreate(CreateView):
+class NoteCreate(LoginRequiredMixin, CreateView):
     model = Note
     fields = ['title', 'body']
     success_url = '/todos/'
@@ -53,10 +69,10 @@ class NoteCreate(CreateView):
         form.instance.user = self.request.user
         return super().form_valid(form)
 
-class NoteUpdate(UpdateView):
+class NoteUpdate(LoginRequiredMixin, UpdateView):
     model = Note
     fields = ['title', 'body']
 
-class NoteDelete(DeleteView):
+class NoteDelete(LoginRequiredMixin, DeleteView):
     model = Note
     success_url = '/todos/'

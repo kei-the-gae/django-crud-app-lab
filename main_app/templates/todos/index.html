@@ -22,11 +22,29 @@
     {% if todos %}
         {% for todo in todos %}
             <div class="card">
+                <form action="{% url 'update_todo' %}" method="post" class="form-container">
+                    {% csrf_token %}
+                    <input
+                        type="checkbox"
+                        name="checked"
+                        id="checked"
+                        value="{{todo.checked}}"
+                        onChange="this.form.submit()"
+                    />
+                    <input
+                        type="text"
+                        name="text"
+                        id="text"
+                        value="{{todo.text}}"
+                        hidden
+                    />
+                </form>
                 {% if todo.checked %}
                     <s><p>{{todo.text}}</p></s>
                 {% else %}
                     <p>{{todo.text}}</p>
                 {% endif %}
+                <a href="{% url 'todo_delete' todo.id %}" class="btn danger">X</a>
             </div>
         {% endfor %}
     {% else %}

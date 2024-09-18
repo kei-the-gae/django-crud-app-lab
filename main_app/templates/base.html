@@ -15,8 +15,19 @@
         </div>
     <nav>
         <ul>
-            <li><a href="{% url 'todo_index' %}">All Todos</a></li>
-            <li><a href="{% url 'note_create' %}">New Note</a></li>
+            {% if user.is_authenticated %}
+                <li><a href="{% url 'todo_index' %}">All Todos</a></li>
+                <li><a href="{% url 'note_create' %}">New Note</a></li>
+                <li>
+                    <form id="logout-form" method="post" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button type="submit">Log out</button>
+                    </form>
+                </li>
+            {% else %}
+                <li><a href="{% url 'home' %}">Login</a></li>
+                <li><a href="{% url 'signup' %}">Sign Up</a></li>
+            {% endif %}
         </ul>
     </nav>
     </header>
