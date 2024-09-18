@@ -7,6 +7,10 @@
     <div class="note-details">
         <h1>{{ note.title }}</h1>
         <p>{{ note.body }}</p>
+        <div class="note-actions">
+            <a href="{% url 'note_update' note.id %}" class="btn warn">Edit</a>
+            <a href="{% url 'note_delete' note.id %}" class="btn danger">Delete</a>
+        </div>
     </div>
 </section>
 {% endblock %}

@@ -5,7 +5,11 @@
 {% block content %}
 
 <div class="page-header">
-    <h1>Add a Note</h1>
+    {% if note %}
+        <h1>Edit {{ note.title }}</h1>
+    {% else %}
+        <h1>Add a Note</h1>
+    {% endif %}
 </div>
 
 <form action="" method="post" class="form-container">
