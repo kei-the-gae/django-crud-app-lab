@@ -1,48 +1,28 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block head %}
-{% comment %} <link rel="stylesheet" href="{% static 'css/cats/cat-index.css' %}"/> {% endcomment %}
 {% endblock %}
 {% block content %}
 
 <section class="page-header">
     <h1>Todos</h1>
-    {% comment %} <img src="{% static 'images/cool-cat.svg' %}" alt="A cool cat" />
-    <img src="{% static 'images/happy-cat.svg' %}" alt="A happy cat" />
-    <img src="{% static 'images/teacup-cat.svg' %}" alt="A cat in a teacup" />
-    <img src="{% static 'images/cat-in-box.svg' %}" alt="A cat in a box" /> {% endcomment %}
 </section>
 
 <section class="card-container">
     {% for todo in todos %}
         <div class="card">
-            <div class="card-content">
-                <div class="card-img-container">
-                    {% comment %} <img
-                        src="{% static 'images/sk8r-boi-cat.svg' %}"
-                        alt="A skater boy cat"
-                    /> {% endcomment %}
-                </div>
-                {% if not todo.checked %}
-                    <s><p>{{todo.text}}</p></s>
-                {% else %}
-                    <p>{{todo.text}}</p>
-                {% endif %}
-            </div>
+            {% if not todo.checked %}
+                <s><p>{{todo.text}}</p></s>
+            {% else %}
+                <p>{{todo.text}}</p>
+            {% endif %}
         </div>
     {% endfor %}
     {% for note in notes %}
         <div class="card">
-            <div class="card-content">
-                <div class="card-img-container">
-                    {% comment %} <img
-                        src="{% static 'images/sk8r-boi-cat.svg' %}"
-                        alt="A skater boy cat"
-                    /> {% endcomment %}
-                </div>
+            <a href="{% url 'note_detail' note.id %}">
                 <h2>{{note.title}}</h2>
-                <p>{{note.body}}</p>
-            </div>
+            </a>
         </div>
     {% endfor %}
 </section>

@@ -5,4 +5,5 @@ urlpatterns = [
     path('', views.Home.as_view(), name='home'),
     path('accounts/signup/', views.signup, name='signup'),
     path('todos/', views.todo_index, name='todo_index'),
+    path('notes/<int:note_id>/', views.note_detail, name='note_detail'),
 ]

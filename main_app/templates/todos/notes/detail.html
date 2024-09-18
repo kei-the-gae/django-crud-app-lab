@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+{% endblock %}
+{% block content %}
+<section class="note-container">
+    <div class="note-details">
+        <h1>{{ note.title }}</h1>
+        <p>{{ note.body }}</p>
+    </div>
+</section>
+{% endblock %}

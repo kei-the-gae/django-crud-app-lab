@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.views.generic import ListView, DetailView
+from django.views.generic import DetailView
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.views import LoginView
@@ -30,3 +30,7 @@ def todo_index(req):
     todos = Todo.objects.all()
     notes = Note.objects.all()
     return render(req, 'todos/index.html', {'todos': todos, 'notes': notes})
+
+def note_detail(req, note_id):
+    note = Note.objects.get(id=note_id)
+    return render(req, 'todos/notes/detail.html', {'note': note})
