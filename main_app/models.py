@@ -17,3 +17,4 @@ class Note(models.Model):
         return f'{self.title}: {self.body}'
     def get_absolute_url(self):
         return reverse("note_detail", kwargs={"note_id": self.id})
+

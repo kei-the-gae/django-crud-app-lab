@@ -5,6 +5,11 @@ urlpatterns = [
     path('', views.Home.as_view(), name='home'),
     path('accounts/signup/', views.signup, name='signup'),
     path('todos/', views.todo_index, name='todo_index'),
+    path(
+        'todos/add-todo/',
+        views.add_todo,
+        name='add_todo'
+    ),
     path('notes/<int:note_id>/', views.note_detail, name='note_detail'),
     path('notes/create/', views.NoteCreate.as_view(), name='note_create'),
     path('notes/<int:pk>/update/', views.NoteUpdate.as_view(), name='note_update'),

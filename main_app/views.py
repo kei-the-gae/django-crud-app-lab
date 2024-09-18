@@ -7,6 +7,7 @@ from django.contrib.auth.views import LoginView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Todo, Note
+from .forms import TodoForm
 
 # Create your views here.
 class Home(LoginView):
@@ -19,7 +20,7 @@ def signup(req):
         if form.is_valid():
             user = form.save()
             login(req, user)
-            # return redirect('todo-index')
+            return redirect('todo_index')
         else:
             error_message = 'Invalid sign up - try again'
     form = UserCreationForm()
@@ -27,9 +28,18 @@ def signup(req):
     return render(req, 'signup.html', context)
 
 def todo_index(req):
+    todo_form = TodoForm()
     todos = Todo.objects.all()
     notes = Note.objects.all()
-    return render(req, 'todos/index.html', {'todos': todos, 'notes': notes})
+    return render(req, 'todos/index.html', {'todo_form': todo_form, 'todos': todos, 'notes': notes})
+
+def add_todo(req):
+    form = TodoForm(req.POST)
+    if form.is_valid():
+        new_todo = form.save(commit=False)
+        new_todo.user_id = req.user.id
+        new_todo.save()
+    return redirect('todo_index')
 
 def note_detail(req, note_id):
     note = Note.objects.get(id=note_id)

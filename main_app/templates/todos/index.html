@@ -9,22 +9,44 @@
 </section>
 
 <section class="card-container">
-    {% for todo in todos %}
-        <div class="card">
-            {% if not todo.checked %}
-                <s><p>{{todo.text}}</p></s>
-            {% else %}
-                <p>{{todo.text}}</p>
-            {% endif %}
+    <form
+        action="{% url 'add_todo' %}"
+        method="post"
+        class="subsection-content"
+        autocomplete="off"
+    >
+        {% csrf_token %}
+        {{ todo_form.as_p }}
+        <button type="submit" class="btn submit">Add Todo</button>
+    </form>
+    {% if todos %}
+        {% for todo in todos %}
+            <div class="card">
+                {% if todo.checked %}
+                    <s><p>{{todo.text}}</p></s>
+                {% else %}
+                    <p>{{todo.text}}</p>
+                {% endif %}
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="subsection-content">
+            <p>⚠️ You have no todos.</p>
         </div>
-    {% endfor %}
-    {% for note in notes %}
-        <div class="card">
-            <a href="{% url 'note_detail' note.id %}">
-                <h2>{{note.title}}</h2>
-            </a>
-        </div>
-    {% endfor %}
+    {% endif %}
+    {% if notes %}
+        {% for note in notes %}
+            <div class="card">
+                <a href="{% url 'note_detail' note.id %}">
+                    <h2>{{note.title}}</h2>
+                </a>
+            </div>
+        {% endfor %}
+    {% else %}
+    <div class="subsection-content">
+        <p>⚠️ You have no notes.</p>
+    </div>
+    {% endif %}
 </section>
 
 {% endblock %}
